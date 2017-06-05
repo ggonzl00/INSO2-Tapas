@@ -25,19 +25,27 @@ exit();
 	//$resultado=$asiento;
 
 	#Insertar datos a través de la sentencia INSERT
-$consulta = "SELECT pass FROM registrarse  WHERE Alias= ";
+$consulta = "SELECT Pass FROM registrarse  WHERE Alias= '".$uname."' ";
+echo $consulta;
+$resultado = $conexion -> query($consulta);//|| die("No se ha podido realizar el alta");
+//echo $resultado;
 
-$resultado = $conexion -> query($consulta)|| die("No se ha podido realizar el alta");
-$solucion[]=0;
  while($valores = mysqli_fetch_array($resultado)){
   //  echo $valores;
-    $solucion[]= $valores['Pass'];
-    
+    $solucion= $valores['Pass'];
+    //echo $valores['Pass'];
 
     //$resultado=$uno[$contador];
     
-  } 
-echo $solucion[0];
+  }
+  if($solucion == $pass){
+
+
+  } else{
+
+
+  }
+//echo $solucion;
 
 //echo " La reserva se ha realizado correctamente </br>";
 //echo " <a href=' Login.html '> Ingresar</a>";
