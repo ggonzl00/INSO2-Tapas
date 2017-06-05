@@ -1,0 +1,3 @@
+<?php
+<input type="image" src='tapas2.jpg' name="valor" value="Guardar" />
+?>
