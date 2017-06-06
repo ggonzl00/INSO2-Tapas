@@ -34,6 +34,7 @@ $resultado = $conexion -> query($consulta)|| die("No se ha podido realizar el al
 
 
 
-header ("Location: Index.html");
+echo " La reserva se ha realizado correctamente </br>";
+echo " <a href=' Login.html '> Ingresar</a>";
 //
 ?>
