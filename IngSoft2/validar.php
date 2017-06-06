@@ -14,8 +14,8 @@ exit();
 	#Variables sacadas del formulario de la calse practica2.php
 	$uname=$_POST['uname'];
 	$pass=$_POST['psw'];
-	
-	//echo $nombre;
+	$admin ='admin';
+
 
 	//foreach ($_POST['checkbox'] as $id){ 
    
@@ -26,7 +26,7 @@ exit();
 
 	#Insertar datos a través de la sentencia INSERT
 $consulta = "SELECT Pass FROM registrarse  WHERE Alias= '".$uname."' ";
-echo $consulta;
+//echo $consulta;
 $resultado = $conexion -> query($consulta);//|| die("No se ha podido realizar el alta");
 //echo $resultado;
 
@@ -38,11 +38,15 @@ $resultado = $conexion -> query($consulta);//|| die("No se ha podido realizar el
     //$resultado=$uno[$contador];
     
   }
-  if($solucion == $pass){
+  echo $solucion;
+  echo $pass;
+  echo $admin;
 
+  if($solucion == $admin){
 
-  } else{
-
+header ("Location: admin.php");
+  } else {
+header ("Location: Pprincipal.php");
 
   }
 //echo $solucion;
