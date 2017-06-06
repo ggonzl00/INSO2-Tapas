@@ -13,11 +13,12 @@ exit();
 	
 	#Variables sacadas del formulario de la calse practica2.php
 	$nombre=$_POST['nombre'];
-	$apellido=$_POST['apellido'];
-	$alias=$_POST['alias'];
-	$pass = $_POST['psw'];
+	//$valoracion=$_POST['valoracion'];
+	$valoracion=NULL;
+	$mesas=$_POST['mesas'];
+	$direccion = $_POST['direccion'];
 	$telefono=$_POST['telefono'];
-	$dni = $_POST['dni'];
+	
 	//echo $nombre;
 
 	//foreach ($_POST['checkbox'] as $id){ 
@@ -28,12 +29,12 @@ exit();
 	//$resultado=$asiento;
 
 	#Insertar datos a través de la sentencia INSERT
-$consulta = "INSERT INTO registrarse VALUES('$nombre', '$alias', '$apellido','$telefono','$pass','$dni')";
+$consulta = "INSERT INTO restaurantes VALUES('$nombre', '$valoracion', '$mesas','$direccion','$telefono')";
 
 $resultado = $conexion -> query($consulta)|| die("No se ha podido realizar el alta");
 
 
 
-header ("Location: Index.html");
+header ("Location: admin.php");
 //
 ?>
