@@ -15,6 +15,7 @@
 
 form {
     border: 3px solid #f1f1f1;
+    width: 50%;
 }
 
 input[type=text], input[type=password], input[type=file]{
@@ -25,21 +26,29 @@ input[type=text], input[type=password], input[type=file]{
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+body{
+  background: #DDFFDD;
+}
 
 button {
+
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 50%;
 }
 
 button:hover {
     opacity: 0.8;
 }
-
+h1 {
+ 
+  color: green;
+  font: oblique bold 120% cursive;
+}
 .cancelbtn {
     width: auto;
     padding: 10px 18px;
@@ -59,6 +68,7 @@ img.avatar {
 
 .container {
     padding: 16px;
+    width: 50%;
 }
 
 span.psw {
@@ -84,7 +94,8 @@ span.psw {
       <body>
  
 
-<h1> ElIMINAR USUARIO </h1>
+<h1 align="center"> ElIMINAR USUARIO </h1>
+<center>
  <?php 
 
 $conexion = new mysqli("localhost", "root", "", "toptapas");
@@ -107,9 +118,11 @@ while ($row = mysqli_fetch_array($resultado)){
   echo "</table> "; 
 
 ?> 
-<a href="eliminarusuario.php"> <button type="button" >Eliminar Usuario</button></a></br>
+
+<a href="eliminarusuario.php" > <button type="button" >Eliminar Usuario</button></a></br>
+
 </br>
-<h1> ElIMINAR RESTAURANTE </h1>
+<h1 align="center"> ElIMINAR RESTAURANTE </h1>
 </br>
 
 <?php 
@@ -158,7 +171,7 @@ for (var i = 0; i < checkboxes.length; i++) {
 </br></br>
 
 
- <h1> ALTA DE RESTAURANTES </h1>
+ <h1 align="center"> ALTA DE RESTAURANTES </h1>
 <form action="agregarbar.php" method="post">
   <div class="imgcontainer">
    <!-- <img src="coche.jpg" alt="Avatar" class="avatar">-->
@@ -197,7 +210,7 @@ for (var i = 0; i < checkboxes.length; i++) {
 </form>
 
 
-
+</center>
 
 
       </body>
