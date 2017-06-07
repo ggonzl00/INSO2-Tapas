@@ -9,24 +9,63 @@ $conexion = new mysqli("localhost", "root", "", "toptapas");
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script>
-        function reservar() {
-            var nombrereserva = document.getElementById('botonreserva').name;
-            alert(nombrereserva);
-            <?php
-            $quitar = "SELECT mesas FROM restaurantes WHERE nombre=nombrereserva";
+        function valora(id,nombre,numero){
+            var nombre =nombre;
+            //alert(nombre);
+            $.ajax({
+                // aqui va la ubicación de la página PHP
 
-            $resu = $conexion->query($quitar);
 
-            while ($tabla = mysqli_fetch_array($resu)) {
-                echo $tabla;
-                $tabla['mesas'] = -1;
+                url:'valora.php',
+                type:'GET',
+
+                data:{nombre:nombre,numero:numero},
+                success:function(resultado){
+
+
+                    $('#valoracion').html(resultado);
+
+
+                }
+            });
+        }
+        function reservar(mesas,nombre) {
+          //  alert (nombre);
+
+            //var nombrereserva = document.getElementById(nombre);
+           // alert (nombrereserva);
+           // alert(mesas);
+            if(mesas<=0){
+               alert("No hay mesas disponibles para la reserva");
+            }else {
+                alert("Ha reservado una mesa");
+                mesas -= 1;
             }
-            ?>
+            $.ajax({
+                // aqui va la ubicación de la página PHP
+
+
+                url:'reserva.php',
+                type:'GET',
+
+                data:{nombre:nombre,mesas:mesas},
+                success:function(resultado){
+
+
+                    $('#nombre').html(resultado);
+
+
+                }
+            });
+          //  alert(mesas);
+          //  return mesas;
+
         }
     </script>
 </head>
-<style>
+<style> 
     #form {
         width: 250px;
         margin: 0 auto;
@@ -75,9 +114,9 @@ $conexion = new mysqli("localhost", "root", "", "toptapas");
 <body>
 <?php
 $consulta = "SELECT * FROM restaurantes";
-$consulpro ="SELECT * FROM productos";
 $resultado = $conexion -> query($consulta);
-$resultadopro = $conexion -> query($consulpro);
+
+//SELECCIONAMOS LOS BARES DE LA BASE DE DATOS
 while($tabla = mysqli_fetch_array($resultado)){
     echo "<div class='restaurantes'>";
 
@@ -88,10 +127,15 @@ while($tabla = mysqli_fetch_array($resultado)){
     echo "<div id=".$tabla['nombre']." class=collapse>";
     echo "<a>Direccion:    ".$tabla['direccion'].  "</a></br>";
     echo "<a>Telefono de Consulta:    ".$tabla['telefono'].  "</a></br>";
-    echo "<a>Mesas disponibles:    ".$tabla['mesas'].  "</a></br>";
+    echo " Mesas disponibles:    <a id=".$tabla['nombre'].">".$tabla['mesas'].  "</a></br>";
 
 
     echo "<div id=productos>Productos:                  Precio:</br>";
+
+
+    //SELECCIONAMOS LOS PRODUCTOS DE LA BASE DE DATOS PARA IMPRIMIRLOS EN CADA BAR
+    $consulpro ="SELECT * FROM productos";
+    $resultadopro = $conexion -> query($consulpro);
     while($tablapro = mysqli_fetch_array($resultadopro)){
 
         echo"<b>".$tablapro['nombre']. "</b>";
@@ -99,27 +143,35 @@ while($tabla = mysqli_fetch_array($resultado)){
     }
 
     echo "</div>";
-    echo "<input type=button id=botonreserva value=reserva name=".$tabla['nombre']." onclick=reservar()>";
+
+            $quitar = "SELECT mesas FROM restaurantes WHERE nombre=.$tabla[nombre]";
+
+            $resu = $conexion->query($quitar);
+            $nombre=$tabla['nombre'];
+    echo "<input type=button id=$nombre value=reserva name=".$tabla['nombre']." onclick=reservar($tabla[mesas],'".$nombre."')>";
+
     ?>
     <form>
   <p class="clasificacion">
-    <input id="radio1" type="radio" name="estrellas" value="5">
-        <label for="radio1">&#9733;</label>
-    <input id="radio2" type="radio" name="estrellas" value="4">
-        <label for="radio2">&#9733;</label>
-    <input id="radio3" type="radio" name="estrellas" value="3">
-        <label for="radio3">&#9733;</label>
-    <input id="radio4" type="radio" name="estrellas" value="2">
-        <label for="radio4">&#9733;</label>
+    <input id="radio1" type="radio" name="estrellas" value="5" >
+        <label for="radio1" onclick="valora('radio1','<?php echo $nombre;?>','5')">&#9733;</label>
+    <input id="radio2" type="radio" name="estrellas" value="4" >
+        <label for="radio2" onclick="valora('radio2','<?php echo $nombre;?>','4')">&#9733;</label>
+    <input id="radio3" type="radio" name="estrellas" value="3" >
+        <label for="radio3" onclick="valora('radio3','<?php echo $nombre;?>','3')">&#9733;</label>
+    <input id="radio4" type="radio" name="estrellas" value="2" >
+        <label for="radio4" onclick="valora('radio4','<?php echo $nombre;?>','2')">&#9733;</label>
     <input id="radio5" type="radio" name="estrellas" value="1">
-        <label for="radio5">&#9733;</label>
+        <label for="radio5" onclick="valora('radio5','<?php echo $nombre;?>','1')">&#9733;</label>
 
 
 </form>
 
 <?php
-    echo "<div id=valoracion><c>Valoracion de los Clientes:    ".$tabla['valoracion'].  "</c></br>";
-    echo "</p></div></div></div>";
+    $variable=$tabla['valoracion'];
+    echo " Valoracion de los Clientes:    <div id=$nombre >";
+    echo round($variable,2);
+    echo "</br></p></div></div></div>";
 }
 ?>
 </body>
